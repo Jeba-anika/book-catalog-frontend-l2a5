@@ -22,7 +22,7 @@ export default function Navbar() {
               </li>
               <li>
                 <Button variant="link" asChild>
-                  <Link to="/products">All Books</Link>
+                  <Link to="/allBooks">All Books</Link>
                 </Button>
               </li>
               <li>
