@@ -8,6 +8,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
+import { useUserLoginMutation, useUserSignUpMutation } from '@/redux/features/user/userApi';
+import { useAppDispatch } from '@/redux/hook';
+import { setUser } from '@/redux/features/user/userSlice';
+import { useNavigate } from 'react-router-dom';
 // import { createUser } from '@/redux/features/user/userSlice';
 // import { useAppDispatch } from '@/redux/hook';
 
@@ -24,11 +28,24 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
         handleSubmit,
         formState: { errors },
     } = useForm<SignupFormInputs>();
+    const [signup, { isLoading }] = useUserSignUpMutation()
+    const [login, { isLoading: isLoginLoading }] = useUserLoginMutation()
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate()
 
-    //   const dispatch = useAppDispatch();
-
-    const onSubmit = (data: SignupFormInputs) => {
+    const onSubmit = async (data: SignupFormInputs) => {
         console.log(data);
+        const payload = {
+            ...data,
+            role: 'user'
+        }
+        const result = await signup(payload)
+        if (result?.data?.statusCode === 200) {
+            const res = await login(data)
+            console.log(res)
+            dispatch(setUser(res?.data?.data))
+            navigate('/')
+        }
         // dispatch(createUser({ email: data.email, password: data.password }));
     };
 

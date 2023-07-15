@@ -4,10 +4,10 @@ export interface IUser {
   _id: number;
 }
 export interface IBook {
-  _id: number;
+  _id?: number;
   title: string;
   genre: string;
   author: string;
-  publicationDate: string[];
-  owner: IUser;
+  publicationDate: string;
+  owner: IUser | string | null;
 }

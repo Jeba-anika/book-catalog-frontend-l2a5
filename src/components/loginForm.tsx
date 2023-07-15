@@ -7,7 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from 'react-hook-form';
-import { FcGoogle } from 'react-icons/fc';
+import { useEffect } from 'react'
+import { useUserLoginMutation } from '@/redux/features/user/userApi';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { setUser } from '@/redux/features/user/userSlice';
+import { useNavigate } from 'react-router-dom';
 // import { createUser } from '@/redux/features/user/userSlice';
 // import { useAppDispatch } from '@/redux/hook';
 
@@ -18,19 +22,29 @@ interface SignupFormInputs {
     password: string;
 }
 
+
 export function LoginForm({ className, ...props }: UserAuthFormProps) {
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<SignupFormInputs>();
+    const { email } = useAppSelector((state) => state.user)
+    const [login, { isLoading, isError, isSucces }] = useUserLoginMutation()
+    const navigate = useNavigate()
 
-    //   const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
-    const onSubmit = (data: SignupFormInputs) => {
-        console.log(data);
-        // dispatch(createUser({ email: data.email, password: data.password }));
+    const onSubmit = async (data: SignupFormInputs) => {
+        const result = await login(data)
+        dispatch(setUser(result?.data?.data))
+        navigate('/')
     };
+    useEffect(() => {
+        if (email) {
+            navigate('/')
+        }
+    }, [email])
 
     return (
         <div className={cn('grid gap-6', className)} {...props}>

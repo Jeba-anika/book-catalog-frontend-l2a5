@@ -2,9 +2,17 @@ import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuItem, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { removeUser, setUser } from '@/redux/features/user/userSlice';
 
 
 export default function Navbar() {
+  const { email } = useAppSelector((state) => state.user)
+  const dispatch = useAppDispatch()
+  const handleLogout = () => {
+    console.log('logout')
+    dispatch(removeUser())
+  }
   return (
     <div className="w-full h-16  backdrop-blur-lg">
       {/* <div className="w-full h-16 fixed top backdrop-blur-lg z-10 "> */}
@@ -20,21 +28,31 @@ export default function Navbar() {
                   <Link className='font-bold text-xl' to="/">Home</Link>
                 </Button>
               </li>
+
               <li>
                 <Button variant="link" asChild>
                   <Link to="/allBooks">All Books</Link>
                 </Button>
               </li>
-              <li>
-                <Button variant="link" asChild>
-                  <Link to="/signup">SignUp</Link>
+              {
+                !email && <>
+                  <li>
+                    <Button variant="link" asChild>
+                      <Link to="/signup">SignUp</Link>
+                    </Button>
+                  </li>
+                  <li>
+                    <Button variant="link" asChild>
+                      <Link to="/signin">SignIn</Link>
+                    </Button>
+                  </li>
+                </>
+              }
+              {email && <><li>
+                <Button onClick={() => handleLogout()}>
+                  LogOut
                 </Button>
-              </li>
-              <li>
-                <Button variant="link" asChild>
-                  <Link to="/signin">SignIn</Link>
-                </Button>
-              </li>
+              </li></>}
               {/* <li>
                 <Button variant="ghost">
                   <HiOutlineSearch size="25" />
@@ -71,14 +89,15 @@ export default function Navbar() {
                         </Link>
                       </>
                     )}
-                    {user.email && (
+                     */}
+                    {email && (
                       <DropdownMenuItem
                         onClick={handleLogout}
                         className="cursor-pointer"
                       >
                         Logout
                       </DropdownMenuItem>
-                    )} */}
+                    )}
                   </DropdownMenuContent>
                 </DropdownMenu>
               </li>

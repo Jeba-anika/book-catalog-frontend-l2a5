@@ -6,22 +6,29 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import { Button } from "./ui/button"
+import { Link } from "react-router-dom"
 
-
-export default function BookCard({ book }) {
+export default function BookCard({ book, isHomePage = true }) {
     return (
 
         <Card>
             <CardHeader>
                 <CardTitle>{book?.title}</CardTitle>
-                <CardDescription>Card Description</CardDescription>
+                <CardDescription>{book?.genre}</CardDescription>
             </CardHeader>
             <CardContent>
-                <p>Card Content</p>
+                <p>Author: {book?.author}</p>
+                <p>Publication Date: {book?.publicationDate}</p>
             </CardContent>
-            <CardFooter>
-                <p>Card Footer</p>
-            </CardFooter>
+            {
+                !isHomePage && <CardFooter>
+                    <Button asChild>
+                        <Link to={`/book/${book._id}`}>See Details</Link>
+                    </Button>
+                </CardFooter>
+            }
+
         </Card>
 
 
