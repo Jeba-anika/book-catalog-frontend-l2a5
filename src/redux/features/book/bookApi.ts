@@ -46,6 +46,16 @@ const productApi = api.injectEndpoints({
         url: `/books?searchTerm=${search}`,
       }),
     }),
+    addReview: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/books/addReview/${id}`,
+        method: "POST",
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -57,5 +67,6 @@ export const {
   useEditBookMutation,
   useDeleteBookMutation,
   useLazySearchBooksQuery,
-  useLazyGetAllBooksQuery
+  useLazyGetAllBooksQuery,
+  useAddReviewMutation,
 } = productApi;

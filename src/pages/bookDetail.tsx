@@ -1,37 +1,49 @@
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { useDeleteBookMutation, useGetBookDetailQuery } from '@/redux/features/book/bookApi'
+import { useAddReviewMutation, useDeleteBookMutation, useGetBookDetailQuery } from '@/redux/features/book/bookApi'
 
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { DialogClose } from '@radix-ui/react-dialog';
 import BookCard from '@/components/bookCard';
 import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
+import { toast } from '@/components/ui/use-toast';
 
 export default function BookDetail() {
     const [inputValue, setInputValue] = useState<string>('');
     const { id } = useParams()
+    const navigate = useNavigate()
     const { data } = useGetBookDetailQuery(id)
     const [deleteBook, { isLoading }] = useDeleteBookMutation()
+    const [addReview, { isLoading: isAddReviewLoading }] = useAddReviewMutation()
     const handleDeleteBook = async () => {
         const result = await deleteBook(id)
-        console.log(result)
+        if (result.data.statusCode === 200) {
+            toast({
+                description: result.data.message
+            })
+        }
+        navigate('/allBooks')
 
     }
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setInputValue(event.target.value);
     };
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log(inputValue);
 
-        // const options = {
-        //     id: id,
-        //     data: { comment: inputValue },
-        // };
-
-        // postComment(options);
-        // setInputValue('');
+        const options = {
+            id: id,
+            data: { review: inputValue },
+        };
+        const result = await addReview(options)
+        if (result.data.statusCode === 200) {
+            toast({
+                description: result.data.message
+            })
+        }
+        setInputValue('');
     };
     return (
         <div>
