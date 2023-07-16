@@ -12,6 +12,7 @@ import { setUser } from '@/redux/features/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { useAddBookMutation } from '@/redux/features/book/bookApi';
 import { IBookInput } from '@/types/globalTypes';
+import { toast } from '@/components/ui/use-toast';
 // import { createUser } from '@/redux/features/user/userSlice';
 // import { useAppDispatch } from '@/redux/hook';
 
@@ -27,19 +28,32 @@ export default function AddBook({ className, ...props }: UserAuthFormProps) {
         formState: { errors },
     } = useForm<IBookInput>();
 
-
+    const navigate = useNavigate()
     const dispatch = useAppDispatch();
     const [addBook, { isLoading }] = useAddBookMutation()
 
     const onSubmit = async (data: IBookInput) => {
         const payload = { ...data, owner: localStorage.getItem("id") }
-        const result = await addBook(payload)
-        console.log(result)
+        try {
+            const result = await addBook(payload)
+            console.log(result)
+            if (result?.data?.statusCode === 200) {
+                toast({
+                    description: 'Book added'
+                })
+                navigate('/allBooks')
+            }
+        } catch (err) {
+
+            toast({
+                description: err?.errorerrorMessages[0].message
+            })
+        }
     };
 
 
     return (
-        <div className={cn('grid gap-6 mt-10', className)} {...props}>
+        <div className={cn('grid gap-8 mt-10 sm:w-2/3 mx-auto', className)} {...props}>
             <form onSubmit={
                 handleSubmit(onSubmit)
             }>

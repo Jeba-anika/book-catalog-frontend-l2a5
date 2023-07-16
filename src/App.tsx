@@ -6,6 +6,8 @@ import Main from './layouts/Main'
 import { useEffect } from 'react';
 import { useAppDispatch } from './redux/hook'
 import { setUser } from './redux/features/user/userSlice'
+import { Toaster } from './components/ui/toaster'
+
 
 function App() {
   const dispatch = useAppDispatch()
@@ -25,6 +27,7 @@ function App() {
 
   return (
     <div>
+      <Toaster></Toaster>
       <Main></Main>
     </div>
   )

@@ -57,4 +57,5 @@ export const {
   useEditBookMutation,
   useDeleteBookMutation,
   useLazySearchBooksQuery,
+  useLazyGetAllBooksQuery
 } = productApi;

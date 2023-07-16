@@ -9,7 +9,7 @@ export default function SignIn() {
     return (
         <>
             {/* <div className="container relative hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0"> */}
-            <div className='h-screen border p-4'>
+            <div className='h-screen p-4'>
 
 
                 <div className="lg:p-8  flex justify-center items-center">

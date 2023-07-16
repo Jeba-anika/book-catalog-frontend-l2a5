@@ -10,7 +10,7 @@ export default function Footer() {
         <div>
           Book Worm
         </div>
-        <div className="flex gap-20">
+        <div className="flex sm:gap-20 gap-6 sm:flex-row flex-col">
           <ul className="space-y-2">
             <li>Upcoming</li>
             <li>Shipping</li>
