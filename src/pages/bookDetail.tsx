@@ -45,13 +45,12 @@ export default function BookDetail() {
         }
         setInputValue('');
     };
+    console.log(data)
     return (
         <div>
             <div className='w-2/3 mx-auto'>
                 <BookCard book={data?.data}></BookCard>
-                {
-                    data?.data?.reviews.map(review => <h1>{review}</h1>)
-                }
+
                 {
                     data?.data?.owner.email === localStorage.getItem("email") && <>
                         <div className='flex gap-4 justify-end mt-6'>
@@ -78,7 +77,7 @@ export default function BookDetail() {
                     </>
                 }
                 <h1>Leave a review</h1>
-                <form className="flex gap-5 items-center" onSubmit={handleSubmit}>
+                <form className="flex gap-5 items-center mb-8" onSubmit={handleSubmit}>
                     <Textarea
                         className="min-h-[30px]"
                         onChange={handleChange}
@@ -86,11 +85,16 @@ export default function BookDetail() {
                     />
                     <Button
                         type="submit"
-                        className="rounded-full h-10 w-10 p-2 text-[25px]"
                     >
                         Send
                     </Button>
                 </form>
+                <h1 className='mb-2'>Reviews</h1>
+                <div className='flex flex-col gap-4'>
+                    {
+                        data?.data?.reviews.map(review => <h1 className='text-xl  shadow  p-2'>{review}</h1>)
+                    }
+                </div>
             </div>
         </div>
     )
