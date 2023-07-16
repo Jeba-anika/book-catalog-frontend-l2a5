@@ -11,3 +11,10 @@ export interface IBook {
   publicationDate: string;
   owner: IUser | string | null;
 }
+
+export interface IBookInput {
+  title: string;
+  genre: string;
+  publicationDate: string;
+  author: string;
+}

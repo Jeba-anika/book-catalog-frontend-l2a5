@@ -1,43 +1,47 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 'use client';
 
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '@/redux/hook';
-import { setUser } from '@/redux/features/user/userSlice';
-import { useNavigate } from 'react-router-dom';
-import { useAddBookMutation } from '@/redux/features/book/bookApi';
-import { IBookInput } from '@/types/globalTypes';
-// import { createUser } from '@/redux/features/user/userSlice';
-// import { useAppDispatch } from '@/redux/hook';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useEditBookMutation, useGetBookDetailQuery } from "@/redux/features/book/bookApi"
+import { IBookInput } from "@/types/globalTypes";
+import { Label } from "@radix-ui/react-dropdown-menu";
+import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom"
+import { useEffect } from 'react'
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
-
-
-
-
-export default function AddBook({ className, ...props }: UserAuthFormProps) {
+export default function EditBook({ className, ...props }: UserAuthFormProps) {
+    const { id } = useParams()
+    const { data } = useGetBookDetailQuery(id)
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors },
-    } = useForm<IBookInput>();
+    } = useForm();
 
+    useEffect(() => {
+        setValue("title", data?.data?.title, { shouldDirty: true, shouldTouch: true })
+        setValue("genre", data?.data?.genre)
+        setValue("author", data?.data?.author)
+        setValue("publicationDate", data?.data?.publicationDate)
+    }, [id, data, setValue])
 
-    const dispatch = useAppDispatch();
-    const [addBook, { isLoading }] = useAddBookMutation()
+    const [editBook, { isLoading }] = useEditBookMutation()
 
     const onSubmit = async (data: IBookInput) => {
-        const payload = { ...data, owner: localStorage.getItem("id") }
-        const result = await addBook(payload)
+        const options = {
+            id,
+            data
+        }
+        console.log(options)
+        const result = await editBook(options)
         console.log(result)
     };
-
-
     return (
         <div className={cn('grid gap-6 mt-10', className)} {...props}>
             <form onSubmit={
@@ -82,25 +86,23 @@ export default function AddBook({ className, ...props }: UserAuthFormProps) {
                         />
                         {errors.author && <p>{errors.author.message}</p>}
                         <Label className="" htmlFor="author">
-                            Genre
+                            Author
                         </Label>
                         <Input
-                            id="genre"
+                            id="author"
                             placeholder="Mystery"
                             type="text"
                             autoCapitalize="none"
                             autoCorrect="off"
-                            {...register('genre', { required: 'Genre is required' })}
+                            {...register('author', { required: 'author is required' })}
                         />
-                        {errors.genre && <p>{errors.genre.message}</p>}
+                        {errors.genre && <p>{errors.author.message}</p>}
 
 
                     </div>
-                    <Button>Add Book</Button>
+                    <Button>Edit Book</Button>
                 </div>
             </form>
-
-
         </div>
-    );
+    )
 }

@@ -22,6 +22,30 @@ const productApi = api.injectEndpoints({
         body: data,
       }),
     }),
+    editBook: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/books/${id}`,
+        method: "PATCH",
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+        body: data,
+      }),
+    }),
+    deleteBook: builder.mutation({
+      query: (id) => ({
+        url: `/books/${id}`,
+        method: "DELETE",
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      }),
+    }),
+    searchBooks: builder.query({
+      query: ({ search }) => ({
+        url: `/books?searchTerm=${search}`,
+      }),
+    }),
   }),
 });
 
@@ -30,4 +54,7 @@ export const {
   useGetAllBooksQuery,
   useGetBookDetailQuery,
   useAddBookMutation,
+  useEditBookMutation,
+  useDeleteBookMutation,
+  useLazySearchBooksQuery,
 } = productApi;

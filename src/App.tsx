@@ -12,10 +12,12 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("token")
     const email = localStorage.getItem("email")
-    if (token && email) {
+    const id = localStorage.getItem("id")
+    if (token && email && id) {
       const payload = {
         accessToken: token,
-        email
+        email,
+        _id: id
       }
       dispatch(setUser(payload))
     }
