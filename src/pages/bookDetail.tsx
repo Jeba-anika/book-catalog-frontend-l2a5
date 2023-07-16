@@ -76,7 +76,7 @@ export default function BookDetail() {
                         </div>
                     </>
                 }
-                <h1>Leave a review</h1>
+                <h1 className='mt-4'>Leave a review</h1>
                 <form className="flex gap-5 items-center mb-8" onSubmit={handleSubmit}>
                     <Textarea
                         className="min-h-[30px]"
@@ -89,12 +89,16 @@ export default function BookDetail() {
                         Send
                     </Button>
                 </form>
-                <h1 className='mb-2'>Reviews</h1>
-                <div className='flex flex-col gap-4'>
-                    {
-                        data?.data?.reviews.map(review => <h1 className='text-xl  shadow  p-2'>{review}</h1>)
-                    }
-                </div>
+                {
+                    data?.data?.reviews.length > 0 && <>
+                        <h1 className='mb-2'>Reviews</h1>
+                        <div className='flex flex-col gap-4'>
+                            {
+                                data?.data?.reviews.map(review => <h1 className='text-xl  shadow  p-2'>{review}</h1>)
+                            }
+                        </div>
+                    </>
+                }
             </div>
         </div>
     )

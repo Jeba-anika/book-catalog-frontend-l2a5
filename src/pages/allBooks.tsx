@@ -50,7 +50,7 @@ export default function AllBooks() {
                     <Input type="text" {...register('search')}></Input><Button className="mt-4 " type="submit">Search</Button>
                 </form>
             </div>
-            <div className=" grid grid-cols-4 gap-4">
+            <div className=" grid grid-cols-3 gap-4">
                 {
                     allBooks?.data?.map((book: IBook) => <BookCard book={book} isHomePage={false}></BookCard>)
                 }

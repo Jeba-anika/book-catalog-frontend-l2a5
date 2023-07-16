@@ -56,6 +56,15 @@ const productApi = api.injectEndpoints({
         body: data,
       }),
     }),
+    addToWishlist: builder.mutation({
+      query: (id) => ({
+        url: `/books/addToWishlist/${id}`,
+        method: "POST",
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      }),
+    }),
   }),
 });
 
@@ -69,4 +78,5 @@ export const {
   useLazySearchBooksQuery,
   useLazyGetAllBooksQuery,
   useAddReviewMutation,
+  useAddToWishlistMutation,
 } = productApi;

@@ -8,8 +8,20 @@ import {
 } from "@/components/ui/card"
 import { Button } from "./ui/button"
 import { Link } from "react-router-dom"
+import { useAddToWishlistMutation } from "@/redux/features/book/bookApi"
+import { toast } from "./ui/use-toast"
 
 export default function BookCard({ book, isHomePage = true }) {
+    const [addToWishlist, { isLoading }] = useAddToWishlistMutation()
+    const handleAddToWishlist = async () => {
+        console.log(book._id)
+        const result = await addToWishlist(book._id)
+        if (result.data.statusCode === 200) {
+            toast({
+                description: result.data.message
+            })
+        }
+    }
     return (
 
         <Card>
@@ -23,9 +35,17 @@ export default function BookCard({ book, isHomePage = true }) {
             </CardContent>
             {
                 !isHomePage && <CardFooter>
-                    <Button asChild>
-                        <Link to={`/book/${book._id}`}>See Details</Link>
-                    </Button>
+                    <div className="flex gap-2">
+                        <Button asChild>
+                            <Link to={`/book/${book._id}`}>See Details</Link>
+                        </Button>
+                        <Button onClick={handleAddToWishlist}>
+                            Add to wishlist
+                        </Button>
+                        <Button >
+                            Plan to read soon
+                        </Button>
+                    </div>
                 </CardFooter>
             }
 
