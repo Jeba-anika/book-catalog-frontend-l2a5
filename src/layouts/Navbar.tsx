@@ -45,6 +45,11 @@ export default function Navbar() {
                 </>
               }
               {email && <><li>
+                <Button variant="link" asChild>
+                  <Link className='font-bold sm:text-xl text-base' to="/wishlist">Wishlist</Link>
+                </Button>
+              </li></>}
+              {email && <><li>
                 <Button onClick={() => handleLogout()}>
                   LogOut
                 </Button>
