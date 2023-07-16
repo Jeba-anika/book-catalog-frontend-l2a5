@@ -65,6 +65,19 @@ const productApi = api.injectEndpoints({
         },
       }),
     }),
+    addToCurrentlyReading: builder.mutation({
+      query: (id) => ({
+        url: `/books/addToCurrentlyReading/${id}`,
+        method: "POST",
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      }),
+    }),
+    getFilteredBooks: builder.query({
+      query: ({ genre, publicationDate }) =>
+        `/books?genre=${genre}&publicationDate=${publicationDate}`,
+    }),
   }),
 });
 
@@ -79,4 +92,6 @@ export const {
   useLazyGetAllBooksQuery,
   useAddReviewMutation,
   useAddToWishlistMutation,
+  useAddToCurrentlyReadingMutation,
+  useLazyGetFilteredBooksQuery,
 } = productApi;

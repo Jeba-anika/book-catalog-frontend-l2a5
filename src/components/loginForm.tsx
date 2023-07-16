@@ -30,13 +30,13 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
         formState: { errors },
     } = useForm<SignupFormInputs>();
     const { email } = useAppSelector((state) => state.user)
-    const [login, { isLoading, isError, isSucces }] = useUserLoginMutation()
+    const [login] = useUserLoginMutation()
     const navigate = useNavigate()
 
     const dispatch = useAppDispatch();
 
     const onSubmit = async (data: SignupFormInputs) => {
-        const result = await login(data)
+        const result: any = await login(data)
         dispatch(setUser(result?.data?.data))
         navigate('/')
     };

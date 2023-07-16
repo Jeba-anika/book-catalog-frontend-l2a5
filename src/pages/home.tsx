@@ -3,7 +3,7 @@ import { useGetTopBooksQuery } from "@/redux/features/book/bookApi";
 import { IBook } from "@/types/globalTypes";
 
 export default function Home() {
-    const { data, isLoading, error } = useGetTopBooksQuery(undefined) as unknown as { data: object, isLoading: boolean, error: string }
+    const { data } = useGetTopBooksQuery<any>(undefined)
     return (
         <div className=" grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4">
             {

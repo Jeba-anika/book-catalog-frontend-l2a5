@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
-import { removeUser, setUser } from '@/redux/features/user/userSlice';
+import { removeUser } from '@/redux/features/user/userSlice';
 
 
 export default function Navbar() {

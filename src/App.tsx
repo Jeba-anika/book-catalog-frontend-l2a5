@@ -1,12 +1,10 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Main from './layouts/Main'
 import { useEffect } from 'react';
 import { useAppDispatch } from './redux/hook'
 import { setUser } from './redux/features/user/userSlice'
-import { Toaster } from './components/ui/toaster'
+import { Toaster } from './components/ui/Toaster'
+
 
 
 function App() {

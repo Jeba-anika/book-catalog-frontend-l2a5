@@ -7,8 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '@/redux/hook';
-import { setUser } from '@/redux/features/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { useAddBookMutation } from '@/redux/features/book/bookApi';
 import { IBookInput } from '@/types/globalTypes';
@@ -29,20 +27,20 @@ export default function AddBook({ className, ...props }: UserAuthFormProps) {
     } = useForm<IBookInput>();
 
     const navigate = useNavigate()
-    const dispatch = useAppDispatch();
-    const [addBook, { isLoading }] = useAddBookMutation()
+    const [addBook] = useAddBookMutation()
 
     const onSubmit = async (data: IBookInput) => {
         const payload = { ...data, owner: localStorage.getItem("id") }
         try {
-            const result = await addBook(payload)
-            console.log(result)
+            const result: any = await addBook(payload)
+
             if (result?.data?.statusCode === 200) {
                 toast({
                     description: 'Book added'
                 })
                 navigate('/allBooks')
             }
+
         } catch (err) {
 
             toast({

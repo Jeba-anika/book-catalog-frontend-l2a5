@@ -8,14 +8,24 @@ import {
 } from "@/components/ui/card"
 import { Button } from "./ui/button"
 import { Link } from "react-router-dom"
-import { useAddToWishlistMutation } from "@/redux/features/book/bookApi"
+import { useAddToCurrentlyReadingMutation, useAddToWishlistMutation } from "@/redux/features/book/bookApi"
 import { toast } from "./ui/use-toast"
 
 export default function BookCard({ book, isHomePage = true }) {
-    const [addToWishlist, { isLoading }] = useAddToWishlistMutation()
-    const handleAddToWishlist = async () => {
+    const [addToWishlist] = useAddToWishlistMutation()
+    const [addToCurrentlyReading] = useAddToCurrentlyReadingMutation()
+    const handleAddToWishlist = async (): Promise<void> => {
         console.log(book._id)
-        const result = await addToWishlist(book._id)
+        const result: any = await addToWishlist(book._id)
+        if (result.data.statusCode === 200) {
+            toast({
+                description: result.data.message
+            })
+        }
+    }
+    const handleAddToCurrentlyReading = async () => {
+        console.log(book._id)
+        const result: any = await addToCurrentlyReading(book._id)
         if (result.data.statusCode === 200) {
             toast({
                 description: result.data.message
@@ -42,8 +52,8 @@ export default function BookCard({ book, isHomePage = true }) {
                         <Button onClick={handleAddToWishlist}>
                             Add to wishlist
                         </Button>
-                        <Button >
-                            Plan to read soon
+                        <Button onClick={handleAddToCurrentlyReading}>
+                            Add to currently reading
                         </Button>
                     </div>
                 </CardFooter>

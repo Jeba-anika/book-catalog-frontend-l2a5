@@ -1,9 +1,4 @@
-import { cn } from '@/lib/utils';
-import { buttonVariants } from '@/components/ui/button';
-import { SignupForm } from '../components/signupForm';
-import { Link } from 'react-router-dom';
 import { LoginForm } from '@/components/loginForm';
-// import logo from '../assets/images/technet-logo-white.png';
 
 export default function SignIn() {
     return (

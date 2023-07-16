@@ -6,19 +6,19 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { DialogClose } from '@radix-ui/react-dialog';
 import BookCard from '@/components/bookCard';
 import { Textarea } from '@/components/ui/textarea';
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { toast } from '@/components/ui/use-toast';
 
 export default function BookDetail() {
     const [inputValue, setInputValue] = useState<string>('');
     const { id } = useParams()
     const navigate = useNavigate()
-    const { data } = useGetBookDetailQuery(id)
-    const [deleteBook, { isLoading }] = useDeleteBookMutation()
-    const [addReview, { isLoading: isAddReviewLoading }] = useAddReviewMutation()
+    const { data } = useGetBookDetailQuery(id as any)
+    const [deleteBook] = useDeleteBookMutation()
+    const [addReview] = useAddReviewMutation()
     const handleDeleteBook = async () => {
-        const result = await deleteBook(id)
-        if (result.data.statusCode === 200) {
+        const result: any = await deleteBook(id)
+        if (result?.data.statusCode === 200) {
             toast({
                 description: result.data.message
             })
@@ -37,7 +37,7 @@ export default function BookDetail() {
             id: id,
             data: { review: inputValue },
         };
-        const result = await addReview(options)
+        const result: any = await addReview(options)
         if (result.data.statusCode === 200) {
             toast({
                 description: result.data.message

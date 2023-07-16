@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 'use client';
 
-import * as React from 'react';
 
-import { cn } from '@/lib/utils';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEditBookMutation, useGetBookDetailQuery } from "@/redux/features/book/bookApi"
@@ -13,16 +11,15 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom"
 import { useEffect } from 'react'
 
-type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
-export default function EditBook({ className, ...props }: UserAuthFormProps) {
+export default function EditBook() {
     const { id } = useParams()
-    const { data } = useGetBookDetailQuery(id)
+    const { data } = useGetBookDetailQuery(id as any)
     const {
         register,
         handleSubmit,
         setValue,
         formState: { errors },
-    } = useForm();
+    } = useForm<any>();
 
     useEffect(() => {
         setValue("title", data?.data?.title, { shouldDirty: true, shouldTouch: true })
@@ -31,7 +28,7 @@ export default function EditBook({ className, ...props }: UserAuthFormProps) {
         setValue("publicationDate", data?.data?.publicationDate)
     }, [id, data, setValue])
 
-    const [editBook, { isLoading }] = useEditBookMutation()
+    const [editBook] = useEditBookMutation()
 
     const onSubmit = async (data: IBookInput) => {
         const options = {
@@ -43,13 +40,13 @@ export default function EditBook({ className, ...props }: UserAuthFormProps) {
         console.log(result)
     };
     return (
-        <div className={cn('grid gap-6 mt-10', className)} {...props}>
+        <div >
             <form onSubmit={
                 handleSubmit(onSubmit)
             }>
                 <div className="grid gap-10">
                     <div className="grid gap-6">
-                        <Label className="" htmlFor="title">
+                        <Label className="" >
                             Title
                         </Label>
                         <Input
@@ -60,8 +57,8 @@ export default function EditBook({ className, ...props }: UserAuthFormProps) {
                             autoCorrect="off"
                             {...register('title', { required: 'Title is required' })}
                         />
-                        {errors.title && <p>{errors.title.message}</p>}
-                        <Label className="" htmlFor="publicationDate">
+                        {errors.title && <p>{errors?.title?.message as string}</p>}
+                        <Label className="" >
                             Genre
                         </Label>
                         <Input
@@ -72,8 +69,8 @@ export default function EditBook({ className, ...props }: UserAuthFormProps) {
                             autoCorrect="off"
                             {...register('publicationDate', { required: 'Publication Date is required' })}
                         />
-                        {errors.publicationDate && <p>{errors.publicationDate.message}</p>}
-                        <Label className="" htmlFor="author">
+                        {errors.publicationDate && <p>{errors.publicationDate.message as string}</p>}
+                        <Label className="" >
                             Author
                         </Label>
                         <Input
@@ -84,8 +81,8 @@ export default function EditBook({ className, ...props }: UserAuthFormProps) {
                             autoCorrect="off"
                             {...register('author', { required: 'Author is required' })}
                         />
-                        {errors.author && <p>{errors.author.message}</p>}
-                        <Label className="" htmlFor="author">
+                        {errors.author && <p>{errors.author.message as string}</p>}
+                        <Label className="" >
                             Author
                         </Label>
                         <Input
@@ -96,7 +93,7 @@ export default function EditBook({ className, ...props }: UserAuthFormProps) {
                             autoCorrect="off"
                             {...register('author', { required: 'author is required' })}
                         />
-                        {errors.genre && <p>{errors.author.message}</p>}
+                        {errors.genre && <p>{errors.author.message as string}</p>}
 
 
                     </div>
