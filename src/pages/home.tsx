@@ -8,8 +8,9 @@ export default function Home() {
         <div className=" grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4">
             {
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-                data?.data?.map((book: IBook) => <BookCard book={book}></BookCard>)
+                data?.data?.map((book: IBook) => <BookCard book={book} handleFinishedReading={undefined}></BookCard>)
             }
+
         </div>
     )
 }
