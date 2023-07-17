@@ -3,7 +3,7 @@ import { toast } from "@/components/ui/use-toast"
 import { useFinishedReadingMutation } from "@/redux/features/book/bookApi"
 import { useGetUserQuery } from "@/redux/features/user/userApi"
 
-export default function Wishlist() {
+export default function CurrentlyReading() {
     const userId: string = localStorage.getItem("id")
     const { data, refetch } = useGetUserQuery(userId, { refetchOnMountOrArgChange: true })
     const [finishedReading] = useFinishedReadingMutation()
@@ -20,9 +20,9 @@ export default function Wishlist() {
     }
     console.log(data)
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4">
             {
-                data?.data?.wishlist?.map(book => <BookCard book={book} isFinishedReading={true} handleFinishedReading={handleFinishedReading}></BookCard>)
+                data?.data?.currentlyReading?.map(book => <BookCard book={book} isFinishedReading={true} handleFinishedReading={handleFinishedReading}></BookCard>)
             }
         </div>
     )

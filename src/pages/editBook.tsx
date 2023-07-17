@@ -8,8 +8,10 @@ import { useEditBookMutation, useGetBookDetailQuery } from "@/redux/features/boo
 import { IBookInput } from "@/types/globalTypes";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useEffect } from 'react'
+import Loader from "@/components/loader";
+import { toast } from "@/components/ui/use-toast";
 
 export default function EditBook() {
     const { id } = useParams()
@@ -28,19 +30,27 @@ export default function EditBook() {
         setValue("publicationDate", data?.data?.publicationDate)
     }, [id, data, setValue])
 
-    const [editBook] = useEditBookMutation()
-
+    const [editBook, { isLoading }] = useEditBookMutation()
+    const navigate = useNavigate()
     const onSubmit = async (data: IBookInput) => {
         const options = {
             id,
             data
         }
         console.log(options)
-        const result = await editBook(options)
-        console.log(result)
+        const result: any = await editBook(options)
+        if (result?.data?.statusCode === 200) {
+            toast({
+                description: 'Book edited'
+            })
+        }
+        navigate('/allBooks')
     };
     return (
-        <div >
+        <div className="sm:w-2/3 mx-auto">
+            {
+                isLoading && <div className="w-full h-full justify-center"><Loader></Loader></div>
+            }
             <form onSubmit={
                 handleSubmit(onSubmit)
             }>
@@ -59,7 +69,7 @@ export default function EditBook() {
                         />
                         {errors.title && <p>{errors?.title?.message as string}</p>}
                         <Label className="" >
-                            Genre
+                            Publication Date
                         </Label>
                         <Input
                             id="publicationDate"
@@ -75,7 +85,7 @@ export default function EditBook() {
                         </Label>
                         <Input
                             id="author"
-                            placeholder="Mystery"
+                            placeholder="Author"
                             type="text"
                             autoCapitalize="none"
                             autoCorrect="off"
@@ -83,17 +93,17 @@ export default function EditBook() {
                         />
                         {errors.author && <p>{errors.author.message as string}</p>}
                         <Label className="" >
-                            Author
+                            Genre
                         </Label>
                         <Input
-                            id="author"
+                            id="genre"
                             placeholder="Mystery"
                             type="text"
                             autoCapitalize="none"
                             autoCorrect="off"
-                            {...register('author', { required: 'author is required' })}
+                            {...register('genre', { required: 'Genre is required' })}
                         />
-                        {errors.genre && <p>{errors.author.message as string}</p>}
+                        {errors.genre && <p>{errors.genre.message as string}</p>}
 
 
                     </div>

@@ -55,7 +55,7 @@ export default function BookCard({ book, isHomePage = true, isFinishedReading = 
                             Add to wishlist
                         </Button>
                         <Button onClick={handleAddToCurrentlyReading}>
-                            Add to currently reading
+                            Currently reading
                         </Button>
                     </div>
                 </CardFooter>

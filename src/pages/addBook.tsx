@@ -70,7 +70,7 @@ export default function AddBook({ className, ...props }: UserAuthFormProps) {
                         />
                         {errors.title && <p>{errors.title.message}</p>}
                         <Label className="" htmlFor="publicationDate">
-                            Genre
+                            Publication date
                         </Label>
                         <Input
                             id="publicationDate"
@@ -86,7 +86,7 @@ export default function AddBook({ className, ...props }: UserAuthFormProps) {
                         </Label>
                         <Input
                             id="author"
-                            placeholder="Mystery"
+                            placeholder="Author name"
                             type="text"
                             autoCapitalize="none"
                             autoCorrect="off"

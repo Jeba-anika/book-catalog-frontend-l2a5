@@ -35,16 +35,16 @@ export default function Navbar() {
                     <Link className='font-bold sm:text-xl text-base' to="/allBooks">All Books</Link>
                   </Button>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                {/* <DropdownMenuItem>
                   <Button variant="link" asChild>
                     <Link className='font-bold sm:text-xl text-base' to="/">Home</Link>
                   </Button>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
+                </DropdownMenuItem> */}
+                {/* <DropdownMenuItem>
                   <Button variant="link" asChild>
                     <Link className='font-bold sm:text-xl text-base' to="/">Home</Link>
                   </Button>
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
 
 
 
@@ -67,6 +67,11 @@ export default function Navbar() {
                   <DropdownMenuItem>
                     <Button variant="link" asChild>
                       <Link className='font-bold sm:text-xl text-base' to="/wishlist">Wishlist</Link>
+                    </Button>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Button variant="link" asChild>
+                      <Link className='font-bold sm:text-xl text-base' to="/currentlyReading">Currently reading</Link>
                     </Button>
                   </DropdownMenuItem>
                 </>}
