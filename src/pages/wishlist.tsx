@@ -4,16 +4,19 @@ import { useFinishedReadingMutation } from "@/redux/features/book/bookApi"
 import { useGetUserQuery } from "@/redux/features/user/userApi"
 
 export default function Wishlist() {
-    const { data } = useGetUserQuery(undefined)
+    const userId: string = localStorage.getItem("id")
+    const { data, refetch } = useGetUserQuery(userId, { refetchOnMountOrArgChange: true })
     const [finishedReading] = useFinishedReadingMutation()
     const handleFinishedReading = async (id) => {
 
         const result: any = await finishedReading(id)
+        console.log(result)
         if (result.data.statusCode === 200) {
             toast({
                 description: result.data.message
             })
         }
+        refetch()
     }
     console.log(data)
     return (

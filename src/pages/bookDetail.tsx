@@ -49,7 +49,7 @@ export default function BookDetail() {
     return (
         <div>
             <div className='w-2/3 mx-auto'>
-                <BookCard book={data?.data}></BookCard>
+                <BookCard book={data?.data} handleFinishedReading={undefined}></BookCard>
 
                 {
                     data?.data?.owner.email === localStorage.getItem("email") && <>
