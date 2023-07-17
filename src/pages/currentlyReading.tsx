@@ -20,10 +20,17 @@ export default function CurrentlyReading() {
     }
     console.log(data)
     return (
-        <div className="grid grid-cols-2 gap-4">
+        <>
             {
-                data?.data?.currentlyReading?.map(book => <BookCard book={book} isFinishedReading={true} handleFinishedReading={handleFinishedReading}></BookCard>)
+                data?.data?.currentlyReading?.length > 0 ?
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {
+                            data?.data?.currentlyReading?.map(book => <BookCard book={book} isFinishedReading={true} handleFinishedReading={handleFinishedReading}></BookCard>)
+                        }
+                    </div> :
+                    <div className="w-full h-full justify-center">No books found on currently reading</div>
             }
-        </div>
+        </>
+
     )
 }

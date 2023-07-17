@@ -14,7 +14,7 @@ export default function BookDetail() {
     const [inputValue, setInputValue] = useState<string>('');
     const { id } = useParams()
     const navigate = useNavigate()
-    const { data, isLoading } = useGetBookDetailQuery(id as any)
+    const { data, isLoading, refetch } = useGetBookDetailQuery(id as any)
     const [deleteBook] = useDeleteBookMutation()
     const [addReview] = useAddReviewMutation()
     const handleDeleteBook = async () => {
@@ -44,6 +44,7 @@ export default function BookDetail() {
                 description: result.data.message
             })
         }
+        refetch()
         setInputValue('');
     };
 
@@ -96,7 +97,7 @@ export default function BookDetail() {
                             <h1 className='mb-2'>Reviews</h1>
                             <div className='flex flex-col gap-4'>
                                 {
-                                    data?.data?.reviews.map(review => <h1 className='text-xl  shadow  p-2'>{review}</h1>)
+                                    data?.data?.reviews.map(review => <h1 className=' shadow  px-4 py-2'>{review}</h1>)
                                 }
                             </div>
                         </>
