@@ -2,8 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { removeUser } from '@/redux/features/user/userSlice';
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 export default function Navbar() {
   const { email } = useAppSelector((state) => state.user)

@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card"
 import { Button } from "./ui/button"
 import { Link } from "react-router-dom"
-import { useAddToCurrentlyReadingMutation, useAddToWishlistMutation, useFinishedReadingMutation } from "@/redux/features/book/bookApi"
+import { useAddToCurrentlyReadingMutation, useAddToWishlistMutation } from "@/redux/features/book/bookApi"
 import { toast } from "./ui/use-toast"
 
 export default function BookCard({ book, isHomePage = true, isFinishedReading = false, handleFinishedReading }) {
