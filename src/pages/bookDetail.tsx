@@ -19,12 +19,19 @@ export default function BookDetail() {
     const [addReview] = useAddReviewMutation()
     const handleDeleteBook = async () => {
         const result: any = await deleteBook(id)
-        if (result?.data.statusCode === 200) {
+        try {
+            if (result?.data.statusCode === 200) {
+                toast({
+                    description: result.data.message
+                })
+            }
+            navigate('/allBooks')
+
+        } catch (err) {
             toast({
-                description: result.data.message
+                description: 'Some error occurred'
             })
         }
-        navigate('/allBooks')
 
     }
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -38,14 +45,21 @@ export default function BookDetail() {
             id: id,
             data: { review: inputValue },
         };
-        const result: any = await addReview(options)
-        if (result.data.statusCode === 200) {
+        try {
+            const result: any = await addReview(options)
+            if (result.data.statusCode === 200) {
+                toast({
+                    description: result.data.message
+                })
+            }
+            refetch()
+            setInputValue('');
+
+        } catch (err) {
             toast({
-                description: result.data.message
+                description: 'Some error occurred'
             })
         }
-        refetch()
-        setInputValue('');
     };
 
     return (

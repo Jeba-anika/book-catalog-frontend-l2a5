@@ -9,14 +9,20 @@ export default function CurrentlyReading() {
     const [finishedReading] = useFinishedReadingMutation()
     const handleFinishedReading = async (id) => {
 
-        const result: any = await finishedReading(id)
-        console.log(result)
-        if (result.data.statusCode === 200) {
+        try {
+            const result: any = await finishedReading(id)
+            console.log(result)
+            if (result.data.statusCode === 200) {
+                toast({
+                    description: result.data.message
+                })
+            }
+            refetch()
+        } catch (err) {
             toast({
-                description: result.data.message
+                description: 'Some error occurred'
             })
         }
-        refetch()
     }
     console.log(data)
     return (

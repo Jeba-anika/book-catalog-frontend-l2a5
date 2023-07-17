@@ -33,18 +33,24 @@ export default function EditBook() {
     const [editBook, { isLoading }] = useEditBookMutation()
     const navigate = useNavigate()
     const onSubmit = async (data: IBookInput) => {
-        const options = {
-            id,
-            data
-        }
-        console.log(options)
-        const result: any = await editBook(options)
-        if (result?.data?.statusCode === 200) {
+        try {
+            const options = {
+                id,
+                data
+            }
+            console.log(options)
+            const result: any = await editBook(options)
+            if (result?.data?.statusCode === 200) {
+                toast({
+                    description: 'Book edited'
+                })
+            }
+            navigate('/allBooks')
+        } catch (err) {
             toast({
-                description: 'Book edited'
+                description: 'Some error occurred'
             })
         }
-        navigate('/allBooks')
     };
     return (
         <div className="sm:w-2/3 mx-auto">
