@@ -10,8 +10,10 @@ import { Button } from "./ui/button"
 import { Link } from "react-router-dom"
 import { useAddToCurrentlyReadingMutation, useAddToWishlistMutation } from "@/redux/features/book/bookApi"
 import { toast } from "./ui/use-toast"
+import { useAppSelector } from "@/redux/hook"
 
 export default function BookCard({ book, isHomePage = true, isFinishedReading = false, handleFinishedReading }) {
+    const { email } = useAppSelector((state) => state.user)
     const [addToWishlist] = useAddToWishlistMutation()
     const [addToCurrentlyReading] = useAddToCurrentlyReadingMutation()
 
@@ -51,12 +53,16 @@ export default function BookCard({ book, isHomePage = true, isFinishedReading = 
                         <Button asChild>
                             <Link to={`/book/${book._id}`}>See Details</Link>
                         </Button>
-                        <Button onClick={handleAddToWishlist}>
-                            Add to wishlist
-                        </Button>
-                        <Button onClick={handleAddToCurrentlyReading}>
-                            Currently reading
-                        </Button>
+                        {
+                            email !== null && <>
+                                <Button onClick={handleAddToWishlist}>
+                                    Add to wishlist
+                                </Button>
+                                <Button onClick={handleAddToCurrentlyReading}>
+                                    Currently reading
+                                </Button>
+                            </>
+                        }
                     </div>
                 </CardFooter>
             }
