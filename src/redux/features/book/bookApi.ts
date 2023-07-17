@@ -78,6 +78,15 @@ const productApi = api.injectEndpoints({
       query: ({ genre, publicationDate }) =>
         `/books?genre=${genre}&publicationDate=${publicationDate}`,
     }),
+    finishedReading: builder.mutation({
+      query: (id) => ({
+        url: `/books/finishedReading/${id}`,
+        method: "POST",
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      }),
+    }),
   }),
 });
 
