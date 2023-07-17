@@ -11,7 +11,7 @@ import { Link } from "react-router-dom"
 import { useAddToCurrentlyReadingMutation, useAddToWishlistMutation } from "@/redux/features/book/bookApi"
 import { toast } from "./ui/use-toast"
 
-export default function BookCard({ book, isHomePage = true }) {
+export default function BookCard({ book, isHomePage = true, isFinishedReading = false }) {
     const [addToWishlist] = useAddToWishlistMutation()
     const [addToCurrentlyReading] = useAddToCurrentlyReadingMutation()
     const handleAddToWishlist = async (): Promise<void> => {
@@ -24,6 +24,15 @@ export default function BookCard({ book, isHomePage = true }) {
         }
     }
     const handleAddToCurrentlyReading = async () => {
+        console.log(book._id)
+        const result: any = await addToCurrentlyReading(book._id)
+        if (result.data.statusCode === 200) {
+            toast({
+                description: result.data.message
+            })
+        }
+    }
+    const handleFinishedReading = async () => {
         console.log(book._id)
         const result: any = await addToCurrentlyReading(book._id)
         if (result.data.statusCode === 200) {
@@ -56,6 +65,13 @@ export default function BookCard({ book, isHomePage = true }) {
                             Add to currently reading
                         </Button>
                     </div>
+                </CardFooter>
+            }
+            {
+                isFinishedReading && <CardFooter>
+                    <Button onClick={handleFinishedReading}>
+                        Finished Reading
+                    </Button>
                 </CardFooter>
             }
 
