@@ -68,7 +68,7 @@ export default function AllBooks() {
                     <Button className="mt-4 " type="submit">Search</Button>
                 </form>
             </div>
-            <div className=" grid grid-cols-2 gap-4">
+            <div className=" grid xl:grid-cols-2 gap-4">
                 {
                     allBooks?.data?.map((book: IBook) => <BookCard book={book} isHomePage={false}></BookCard>)
                 }
