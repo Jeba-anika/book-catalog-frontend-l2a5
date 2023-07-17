@@ -27,5 +27,9 @@ const userApi = api.injectEndpoints({
   }),
 });
 
-export const { useUserLoginMutation, useUserSignUpMutation, useGetUserQuery } =
-  userApi;
+export const {
+  useUserLoginMutation,
+  useUserSignUpMutation,
+  useGetUserQuery,
+  useLazyGetUserQuery,
+} = userApi;

@@ -103,4 +103,5 @@ export const {
   useAddToWishlistMutation,
   useAddToCurrentlyReadingMutation,
   useLazyGetFilteredBooksQuery,
+  useFinishedReadingMutation,
 } = productApi;
