@@ -70,7 +70,7 @@ export default function AllBooks() {
             </div>
             <div className=" grid xl:grid-cols-2 gap-4">
                 {
-                    allBooks?.data?.map((book: IBook) => <BookCard book={book} isHomePage={false}></BookCard>)
+                    allBooks?.data?.map((book: IBook) => <BookCard book={book} isHomePage={false} handleFinishedReading={undefined}></BookCard>)
                 }
             </div>
         </div>

@@ -11,10 +11,10 @@ import { Link } from "react-router-dom"
 import { useAddToCurrentlyReadingMutation, useAddToWishlistMutation, useFinishedReadingMutation } from "@/redux/features/book/bookApi"
 import { toast } from "./ui/use-toast"
 
-export default function BookCard({ book, isHomePage = true, isFinishedReading = false }) {
+export default function BookCard({ book, isHomePage = true, isFinishedReading = false, handleFinishedReading }) {
     const [addToWishlist] = useAddToWishlistMutation()
     const [addToCurrentlyReading] = useAddToCurrentlyReadingMutation()
-    const [finishedReading] = useFinishedReadingMutation()
+
     const handleAddToWishlist = async (): Promise<void> => {
         console.log(book._id)
         const result: any = await addToWishlist(book._id)
@@ -33,15 +33,7 @@ export default function BookCard({ book, isHomePage = true, isFinishedReading = 
             })
         }
     }
-    const handleFinishedReading = async () => {
-        console.log(book._id)
-        const result: any = await finishedReading(book._id)
-        if (result.data.statusCode === 200) {
-            toast({
-                description: result.data.message
-            })
-        }
-    }
+
     return (
 
         <Card>
@@ -70,7 +62,7 @@ export default function BookCard({ book, isHomePage = true, isFinishedReading = 
             }
             {
                 isFinishedReading && <CardFooter>
-                    <Button onClick={handleFinishedReading}>
+                    <Button onClick={() => handleFinishedReading(book._id)}>
                         Finished Reading
                     </Button>
                 </CardFooter>
